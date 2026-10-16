@@ -321,17 +321,6 @@ plugin, geven dan geen "Illegal mix of collations" meer in een join.
 Een collatie die een kolom zelf heeft, zoals `utf8mb4_bin` op een JSON-kolom, blijft
 staan. Met `'tableCollations' => true` gaat ook de standaard van elke tabel mee.
 
-Op SPAR werden 66 + 23 tabellen met twee collaties na import allemaal
-`utf8mb3_uca1400_ai_ci` (de standaard van MariaDB 11.8), met dezelfde
-`CHECKSUM TABLE` en zonder dubbele sleutels. Een andere collatie kan in theorie twee
-waarden in een unieke index gelijk maken die eerst verschilden (`ß` en `ss`); dan
-weigert de import, en is `true` de uitweg.
-
-Het gelijktrekken gebeurt per karakterset. Bij anwbgolf (MySQL 8) bleven na import
-`utf8mb3_general_ci` en `utf8mb4_0900_ai_ci` naast elkaar staan, de standaarden van
-de twee karaktersets. Tussen utf8mb3 en utf8mb4 zet MySQL zelf om, dus dat geeft in
-een join geen fout.
-
 ## Wat altijd gebeurt
 
 De preset `craft` (zie `presets/craft.php`) doet dit:
@@ -375,10 +364,9 @@ Verder doet het script zelf:
    ```
 
    Bewaar alleen domeinen waarvan je zeker bent dat er geen klanten of leden op
-   staan. anwbgolf gaf leden zonder eigen e-mailadres een adres op
-   `@anwbgolf-bogus.nl`; dat domein bewaren zou 19.536 echte leden ongemoeid laten.
+   staan.
 3. **Draai lokaal `php craft anonymize/check`** (het leest alleen). Het noemt alles
-   zonder bestemming, bij anwbgolf eerst 438 dingen. Werk de lijst af:
+   zonder bestemming. Werk de lijst af:
    - **Inhoud zonder persoonsgegevens** gaat in `keep.elements`: `section:…`, `globalSet:…`, en de bloktypes van Matrix als `entryType:…`.
    - **Entry types met persoonsgegevens** krijgen `elements['entryType:…']` met `title` en `fields`. Geef velden van één persoon of één adres dezelfde `@groep`.
    - **Volumes** krijgen `filename`, `title` en `alt`: `placeholder`, of `keep` voor bijvoorbeeld logo's.
@@ -412,7 +400,7 @@ Verder doet het script zelf:
 
    Heet de testomgeving anders dan `test` of `staging`, zet hem dan in
    `placeholders.environments`.
-7. **Ruim dummy-data op** waar die zat (anwbgolf, leergelddenhaag):
+7. **Ruim dummy-data op** waar die zat:
    - `php craft plugin/uninstall dummy-data`;
    - `composer remove quatrecentquatre/craft-dummy-data`;
    - `config/dummy-data.php` weg.
@@ -440,14 +428,4 @@ Het geheugen groeit niet mee met de grootte van de database. Het groeit wel mee 
 - het hoogste element-id: een tot twee bytes per id, in een handvol kaarten;
 - het aantal gebruikers en elementen dat verandert: een regel zoekwoorden elk.
 
-Daarbij komt wat Craft zelf al gebruikt (48 MB bij anwbgolf). Is de CLI-limiet van
-256 MB niet genoeg, dan helpt `php -d memory_limit=512M craft anonymize/dump`.
-
-| Database | Dump | Tijd | Geheugen |
-|---|---|---|---|
-| SPAR, MariaDB 11.8 (3,9 miljoen rijen) | 1041 MB | 32 s | 44 MB |
-| SPAR met `--gzip` | 88 MB | 37 s | 48 MB |
-| anwbgolf, MySQL 8 (80.109 gebruikers, hoogste id 5,7 miljoen) | 1013 MB | 40 s | 132 MB |
-
-Zonder regels gaf de import op beide dezelfde `CHECKSUM TABLE` als de bron, voor alle
-89 en 138 tabellen.
+Is de CLI-limiet van 256 MB niet genoeg, dan helpt `php -d memory_limit=512M craft anonymize/dump`.
