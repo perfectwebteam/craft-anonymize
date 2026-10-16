@@ -200,6 +200,7 @@ return [
 
 - per soort: `section:handle`, `entryType:handle` (dekt ook geneste entries in Matrix en CKEditor), `volume:handle`, `globalSet:handle`, `categoryGroup:handle`, `tagGroup:handle`, `contentBlock:handle`, `user` en `address`;
 - de elementen van een plugin: `elementType:Klasse`, of `elementType:vendor\plugin\*` voor alle klassen van een namespace. In `keep.elements` blijven ze heel; als regel krijgen ze een titel, en hun velden als ze een veldindeling hebben. Hun zoekwoorden worden dan leeg, behalve die van de titel;
+- een veldindeling zonder eigenaar: `layout:id`. Dat is bijvoorbeeld een indeling van Matrix of Super Table die uit Craft 4 is blijven staan. `check` noemt ze zo;
 - alleen in `keep.elements`: losse elementen (`entry:id`, `asset:id`, `user:id`, `element:id`).
 
 Een `section:`-selector raakt geen geneste entries; die classificeer je met `entryType:`.
