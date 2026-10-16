@@ -431,9 +431,13 @@ final class Anonymizer
                 $slug = ElementHelper::generateSlug("{$changes['title']} {$seedId}");
                 if ($slug !== $row['slug']) {
                     $changes['slug'] = $slug;
-                    if ($row['uri'] !== null) {
-                        $uri = implode('/', array_map(fn($part) => $part === $row['slug'] ? $slug : $part, explode('/', $row['uri'])));
-                        if ($uri !== $row['uri']) {
+                    if ($row['uri'] !== null && $row['slug'] !== '') {
+                        // Wherever the uriFormat put the slug: a segment of its own, or with more
+                        // around it, as in `winkel/{nummer}-{slug}`. Not inside a longer word, so a
+                        // short slug leaves the rest of the uri alone.
+                        $pattern = '/(?<![\p{L}\p{N}])' . preg_quote($row['slug'], '/') . '(?![\p{L}\p{N}])/u';
+                        $uri = preg_replace_callback($pattern, fn() => $slug, $row['uri']);
+                        if ($uri !== null && $uri !== $row['uri']) {
                             $changes['uri'] = $uri;
                         }
                     }
