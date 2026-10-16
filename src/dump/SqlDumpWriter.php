@@ -95,13 +95,27 @@ final class SqlDumpWriter
      * to drop it. $needs are the columns it reads: a table without one stops the
      * dump rather than going out as it is.
      *
+     * A second filter on the same table runs after the first, on what that made
+     * of the row: it can change more or drop the row, and its [] keeps what the
+     * first changed. So a handler on a table the rules rewrite adds to them, and
+     * cannot switch them off.
+     *
      * @param list<string> $needs
      * @param callable(array<string, string|null>): (array<string, string|null>|false) $filter
      */
     public function filter(string $table, array $needs, callable $filter): void
     {
-        $this->filters[$table] = $filter;
-        $this->needs[$table] = $needs;
+        $first = $this->filters[$table] ?? null;
+        $this->filters[$table] = $first === null ? $filter : static function(array $row) use ($first, $filter): array|false {
+            $changes = $first($row);
+            if ($changes === false) {
+                return false;
+            }
+            $more = $filter(array_replace($row, $changes));
+
+            return $more === false ? false : array_replace($changes, $more);
+        };
+        $this->needs[$table] = array_values(array_unique(array_merge($this->needs[$table] ?? [], $needs)));
     }
 
     /** Writes the table's structure and none of its rows. */

@@ -166,9 +166,12 @@ final class Anonymizer
                 $writer->filter($table, array_values(array_unique($needs)), fn(array $row) => $this->tableRow($table, $rule, $row));
             }
         }
-        foreach ($this->plan->handled as $table => $handler) {
+        // Last: a handler gets the row as the rules and the script made it, and adds to that.
+        foreach ($this->plan->handled as $table => $handlers) {
             $short = substr($table, strlen($p));
-            $writer->filter($table, $this->plan->handledColumns[$table], fn(array $row) => $handler->row($short, $row));
+            foreach ($handlers as $handler) {
+                $writer->filter($table, $this->plan->handledColumns[$table], fn(array $row) => $handler->row($short, $row));
+            }
         }
     }
 

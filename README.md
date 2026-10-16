@@ -283,6 +283,14 @@ Voor inhoud die een regel niet kan beschrijven, zoals JSON van een plugin met ee
 eigen opbouw, implementeer je `perfectwebteam\anonymize\Handler` en noem je de klasse
 in `handlers`. `prepare()` draait in de snapshot vóór de dump en mag queries doen.
 `row()` krijgt elke rij van de tabellen die de handler noemt, en mag geen query doen.
+Het geeft de kolommen terug die veranderen, `[]` om de rij te houden, of `false` om hem
+weg te laten.
+
+Een handler draait na wat er verder met de tabel gebeurt: de regels van het project en
+de presets, en wat het script zelf doet met bijvoorbeeld `users`, `assets` en
+`elements_sites`. Hij krijgt de rij zoals die daarna is. Hij kan dus meer veranderen of
+de rij weglaten, maar de anonimisering niet uitzetten. Meerdere handlers op één tabel
+draaien in de volgorde van `handlers`.
 
 `FormieSubmissions` (preset `formie`) is het voorbeeld. Formie 3 slaat een inzending op
 als JSON op uid van elk veld, en genest voor groepen, herhalingen en de delen van een

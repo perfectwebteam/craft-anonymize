@@ -12,6 +12,12 @@ use yii\db\Connection;
  * prepare() runs in the dump's snapshot before any table streams: look up what
  * row() needs there. While a table streams the connection takes no other query,
  * so row() must not query.
+ *
+ * row() runs after whatever else rewrites the table: the rules of the project
+ * and the presets, and the script's own work on users, assets, elements_sites
+ * and the like. It gets the row as they made it, so it can change more or drop
+ * the row, but not switch them off. Handlers on the same table run in the order
+ * of `handlers`.
  */
 interface Handler
 {

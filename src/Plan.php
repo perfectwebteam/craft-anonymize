@@ -165,10 +165,10 @@ final class Plan
     /** @var array<string, array> element class => its rule (`elements['elementType:…']`), for elements of plugins */
     public array $elementTypeRules = [];
 
-    /** @var array<string, Handler> full table name => the handler that rewrites it */
+    /** @var array<string, list<Handler>> full table name => the handlers that rewrite it, in the order they run */
     public array $handled = [];
 
-    /** @var array<string, list<string>> full table name => the columns its handler reads */
+    /** @var array<string, list<string>> full table name => the columns its handlers read */
     public array $handledColumns = [];
 
     public readonly Values $values;
@@ -289,8 +289,8 @@ final class Plan
         foreach ($this->elementTypeRules as $class => $rule) {
             $lines[] = "elementType:{$class}\n      titel: " . ($rule['title']?->label() ?? 'keep') . ', zoekwoorden behalve de titel leeg';
         }
-        foreach ($this->handled as $table => $handler) {
-            $lines[] = 'tabel ' . substr($table, strlen($this->prefix)) . "\n      door " . get_class($handler);
+        foreach ($this->handled as $table => $handlers) {
+            $lines[] = 'tabel ' . substr($table, strlen($this->prefix)) . "\n      door " . implode(', ', array_map(fn(Handler $handler) => $handler::class, $handlers));
         }
 
         return $lines;
@@ -1036,9 +1036,8 @@ final class Plan
                 $this->errors[] = "{$where}: " . (str_contains((string)$name, '*') ? 'geen tabel past daarop' : 'die tabel bestaat niet');
             }
             foreach ($found as $full) {
-                if (isset($this->handled[$full])) {
-                    $this->errors[] = "{$where}: die tabel doet " . get_class($this->handled[$full]);
-                } elseif ($rule === 'empty') {
+                // A handler on the same table runs after this rule, on what it made of the row.
+                if ($rule === 'empty') {
                     $this->tables[$full] = ['empty' => true];
                 } else {
                     $this->tables[$full] = $this->tableRule($full, $rule, $where, $preset);
@@ -1218,8 +1217,8 @@ final class Plan
                 continue;
             }
             foreach ($tables as $full => $columns) {
-                $this->handled[$full] = $handler;
-                $this->handledColumns[$full] = $columns;
+                $this->handled[$full][] = $handler;
+                $this->handledColumns[$full] = array_values(array_unique(array_merge($this->handledColumns[$full] ?? [], $columns)));
             }
             $handler->prepare($this, $this->db);
         }
