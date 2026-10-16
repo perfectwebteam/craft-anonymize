@@ -1,0 +1,24 @@
+{
+  "name": "perfectwebteam/craft-anonymize",
+  "description": "Een geanonimiseerde dump van de database van een Craft 5-installatie, met alleen PHP",
+  "type": "yii2-extension",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Perfect Web Team",
+      "homepage": "https://perfectwebteam.nl"
+    }
+  ],
+  "require": {
+    "php": ">=8.2",
+    "craftcms/cms": "^5.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "perfectwebteam\\anonymize\\": "src/"
+    }
+  },
+  "extra": {
+    "bootstrap": "perfectwebteam\\anonymize\\Bootstrap"
+  }
+}
