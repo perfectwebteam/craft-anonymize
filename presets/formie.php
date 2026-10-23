@@ -59,5 +59,15 @@ return [
         'formie_payments_subscriptions' => ['columns' => ['subscriptionData' => 'null']],
         // De inhoudstabellen van Formie 2, na de overstap blijven staan: oude inzendingen.
         'fmc_*' => 'empty',
+        // De rest van Formie 2, die Formie 3 niet leest; formie_tokens hield de OAuth-tokens van de integraties.
+        'formie_nested' => 'empty',
+        'formie_nestedfieldrows' => 'empty',
+        'formie_newlayout' => 'empty',
+        'formie_newnestedlayout' => 'empty',
+        'formie_pagesettings' => 'empty',
+        'formie_rows' => 'empty',
+        'formie_syncfields' => 'empty',
+        'formie_syncs' => 'empty',
+        'formie_tokens' => 'empty',
     ],
 ];

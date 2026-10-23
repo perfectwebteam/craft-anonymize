@@ -266,7 +266,7 @@ voor mist.
 | Preset | Wat het doet |
 |---|---|
 | `craft` | Staat altijd aan, zie "Wat altijd gebeurt". |
-| `formie` | **Inzendingen:** houden hun vorm met verzonnen inhoud (zie Handlers), en hun titel wordt `Inzending {id}`. **Verzonden notificaties:** verliezen hun mail. **Betalingen:** verliezen de antwoorden van de provider. **De oude `fmc_*`-tabellen van Formie 2:** gaan leeg, en de rijen van hun groepen en herhalingen verliezen hun zoekwoorden. **Notificaties en integraties:** staan uit, zodat de kopie geen mail verstuurt en niets naar een CRM, nieuwsbrief of webhook stuurt. Wil je ze houden, zet dan `enabled` op `'keep'` in `tables.formie_notifications` of `tables.formie_integrations`. De integraties staan ook in project config: `project-config/apply` zet een integratie weer aan als haar config verandert, en met `--force` allemaal. De formulieren blijven. |
+| `formie` | **Inzendingen:** houden hun vorm met verzonnen inhoud (zie Handlers), en hun titel wordt `Inzending {id}`. **Verzonden notificaties:** verliezen hun mail. **Betalingen:** verliezen de antwoorden van de provider. **De oude tabellen van Formie 2** (`fmc_*`, `formie_nested`, `formie_tokens` en dergelijke): gaan leeg, en de rijen van hun groepen en herhalingen verliezen hun zoekwoorden. **Notificaties en integraties:** staan uit, zodat de kopie geen mail verstuurt en niets naar een CRM, nieuwsbrief of webhook stuurt. Wil je ze houden, zet dan `enabled` op `'keep'` in `tables.formie_notifications` of `tables.formie_integrations`. De integraties staan ook in project config: `project-config/apply` zet een integratie weer aan als haar config verandert, en met `--force` allemaal. De formulieren blijven. |
 | `retour` | De 404-statistiek verliest IP-adres, referrer en user agent. |
 | `knock-knock` | De inlogpogingen gaan leeg: daar staan IP-adressen en ingetypte wachtwoorden in. |
 | `webhooks` | De verstuurde requests gaan leeg, en de headers van een webhook (tokens) ook. |
@@ -336,7 +336,7 @@ De preset `craft` (zie `presets/craft.php`) doet dit:
 - **Sessies, tokens, de wachtrij, deprecation-logs en de asset-index** worden leeggemaakt.
 - **GraphQL-tokens** worden vervangen, behalve het publieke.
 - **Notities bij concepten en revisies** worden leeggemaakt.
-- **Tabellen die van Craft 4 zijn blijven staan** (`content`, `matrixcontent_*`) worden leeggemaakt. Craft 5 leest ze niet, maar er staan oude veldwaarden in.
+- **Tabellen die van Craft 4 zijn blijven staan** (`content`, `matrixcontent_*`, `matrixblocks`, `fieldgroups`, `fieldlayouttabs` en dergelijke, en `supertableblocks` en `stc_*` van Super Table) worden leeggemaakt. Craft 5 leest ze niet, maar er staan oude veldwaarden in.
 
 Verder doet het script zelf:
 

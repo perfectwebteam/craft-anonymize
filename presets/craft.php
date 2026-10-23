@@ -92,5 +92,16 @@ return [
         // Van Craft 4 blijven staan na de overstap; Craft 5 leest ze niet, en ze houden oude veldwaarden.
         'content' => 'empty',
         'matrixcontent_*' => 'empty',
+        'matrixblocks' => 'empty',
+        'matrixblocks_owners' => 'empty',
+        'matrixblocktypes' => 'empty',
+        'fieldgroups' => 'empty',
+        'fieldlayouttabs' => 'empty',
+        'fieldlayoutfields' => 'empty',
+        // Super Table bestaat niet voor Craft 5: de overstap maakt er Matrix van en laat deze staan.
+        'supertableblocks' => 'empty',
+        'supertableblocks_owners' => 'empty',
+        'supertableblocktypes' => 'empty',
+        'stc_*' => 'empty',
     ],
 ];
