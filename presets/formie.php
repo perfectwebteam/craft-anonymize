@@ -5,7 +5,8 @@ use perfectwebteam\anonymize\handlers\FormieSubmissions;
 /**
  * Formie 3. Inzendingen houden hun vorm met verzonnen inhoud
  * (FormieSubmissions), verzonden notificaties verliezen hun mail, betalingen
- * hun antwoorden van de provider. De formulieren zelf blijven.
+ * hun antwoorden van de provider. De formulieren zelf blijven, maar hun
+ * notificaties en de integraties staan op de kopie uit.
  */
 return [
     'handlers' => [FormieSubmissions::class],
@@ -16,8 +17,8 @@ return [
         ],
         'tables' => [
             'formie_emailtemplates', 'formie_fieldlayout_pages', 'formie_fieldlayout_rows', 'formie_fieldlayouts',
-            'formie_fields', 'formie_forms', 'formie_formtemplates', 'formie_integrations', 'formie_notifications',
-            'formie_payments_plans', 'formie_pdftemplates', 'formie_relations', 'formie_statuses', 'formie_stencils',
+            'formie_fields', 'formie_forms', 'formie_formtemplates', 'formie_payments_plans', 'formie_pdftemplates',
+            'formie_relations', 'formie_statuses', 'formie_stencils',
         ],
     ],
 
@@ -31,6 +32,11 @@ return [
     ],
 
     'tables' => [
+        // Een kopie verstuurt geen mail en stuurt niets naar CRM's, nieuwsbrieven of webhooks.
+        // De integraties staan ook in project config: `project-config/apply` zet een integratie weer aan
+        // als haar config verandert, en met --force allemaal.
+        'formie_notifications' => ['columns' => ['enabled' => ['value' => '0']]],
+        'formie_integrations' => ['columns' => ['enabled' => ['value' => 'false']]],
         'formie_sentnotifications' => [
             'columns' => [
                 'title' => ['format' => 'Notificatie {id}'],

@@ -269,7 +269,7 @@ voor mist.
 | Preset | Wat het doet |
 |---|---|
 | `craft` | Staat altijd aan, zie "Wat altijd gebeurt". |
-| `formie` | **Inzendingen:** houden hun vorm met verzonnen inhoud (zie Handlers), en hun titel wordt `Inzending {id}`. **Verzonden notificaties:** verliezen hun mail. **Betalingen:** verliezen de antwoorden van de provider. **De oude `fmc_*`-tabellen van Formie 2:** gaan leeg, en de rijen van hun groepen en herhalingen verliezen hun zoekwoorden. De formulieren blijven. |
+| `formie` | **Inzendingen:** houden hun vorm met verzonnen inhoud (zie Handlers), en hun titel wordt `Inzending {id}`. **Verzonden notificaties:** verliezen hun mail. **Betalingen:** verliezen de antwoorden van de provider. **De oude `fmc_*`-tabellen van Formie 2:** gaan leeg, en de rijen van hun groepen en herhalingen verliezen hun zoekwoorden. **Notificaties en integraties:** staan uit, zodat de kopie geen mail verstuurt en niets naar een CRM, nieuwsbrief of webhook stuurt. Wil je ze houden, zet dan `enabled` op `'keep'` in `tables.formie_notifications` of `tables.formie_integrations`. De integraties staan ook in project config: `project-config/apply` zet een integratie weer aan als haar config verandert, en met `--force` allemaal. De formulieren blijven. |
 | `retour` | De 404-statistiek verliest IP-adres, referrer en user agent. |
 | `knock-knock` | De inlogpogingen gaan leeg: daar staan IP-adressen en ingetypte wachtwoorden in. |
 | `webhooks` | De verstuurde requests gaan leeg, en de headers van een webhook (tokens) ook. |
@@ -354,7 +354,7 @@ Verder doet het script zelf:
 - **Bestanden meenemen.** Volumes, `storage/` en logs vallen erbuiten; alleen de database gaat mee. De dump vervangt wel bestandsnamen en titels, en op de kopie maakt `anonymize/placeholders` nepbestanden.
 - **Importeren.** Dat doet de mariadb-client of `craft db/restore`.
 - **Andere zoekindexen.** Meilisearch en Elasticsearch, en caches in Redis, vallen erbuiten.
-- **Integraties uitzetten.** Een kopie waarop webhooks of een koppeling naar een CRM aanstaan, stuurt naar echte systemen.
+- **Integraties uitzetten**, behalve die van Formie. Een kopie waarop webhooks of een koppeling naar een CRM aanstaan, stuurt naar echte systemen.
 - **PostgreSQL en Craft 4.**
 
 ## In een ander project
