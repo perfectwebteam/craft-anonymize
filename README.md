@@ -269,7 +269,7 @@ voor mist.
 | Preset | Wat het doet |
 |---|---|
 | `craft` | Staat altijd aan, zie "Wat altijd gebeurt". |
-| `formie` | **Inzendingen:** houden hun vorm met verzonnen inhoud (zie Handlers), en hun titel wordt `Inzending {id}`. **Verzonden notificaties:** verliezen hun mail. **Betalingen:** verliezen de antwoorden van de provider. **De oude `fmc_*`-tabellen van Formie 2:** gaan leeg. De formulieren blijven. |
+| `formie` | **Inzendingen:** houden hun vorm met verzonnen inhoud (zie Handlers), en hun titel wordt `Inzending {id}`. **Verzonden notificaties:** verliezen hun mail. **Betalingen:** verliezen de antwoorden van de provider. **De oude `fmc_*`-tabellen van Formie 2:** gaan leeg, en de rijen van hun groepen en herhalingen verliezen hun zoekwoorden. De formulieren blijven. |
 | `retour` | De 404-statistiek verliest IP-adres, referrer en user agent. |
 | `knock-knock` | De inlogpogingen gaan leeg: daar staan IP-adressen en ingetypte wachtwoorden in. |
 | `webhooks` | De verstuurde requests gaan leeg, en de headers van een webhook (tokens) ook. |

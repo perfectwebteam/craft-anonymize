@@ -13,8 +13,6 @@ return [
     'keep' => [
         'elements' => [
             'elementType:verbb\formie\elements\Form',
-            // Rijen van groepen en herhalingen uit Formie 2; hun inhoud stond in fmc_*.
-            'elementType:verbb\formie\elements\NestedFieldRow',
         ],
         'tables' => [
             'formie_emailtemplates', 'formie_fieldlayout_pages', 'formie_fieldlayout_rows', 'formie_fieldlayouts',
@@ -27,6 +25,9 @@ return [
         // Een titel van een inzending kan uit haar velden komen.
         'elementType:verbb\formie\elements\Submission' => ['title' => ['format' => 'Inzending {id}']],
         'elementType:verbb\formie\elements\SentNotification' => ['title' => ['format' => 'Notificatie {id}']],
+        // Rijen van groepen en herhalingen uit Formie 2. Hun inhoud stond in fmc_*, maar hun
+        // zoekwoorden bevatten nog wat er was ingevuld.
+        'elementType:verbb\formie\elements\NestedFieldRow' => ['title' => 'keep'],
     ],
 
     'tables' => [
