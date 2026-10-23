@@ -33,9 +33,6 @@ het project:
 composer require perfectwebteam/craft-anonymize:^1.0
 ```
 
-De servers hebben toegang tot deze private repository nodig, net als voor de andere
-eigen packages.
-
 Het is een Yii2-extensie: Craft laadt het commando zelf in. Er is geen
 `plugin/install` nodig, project config verandert niet en in het CP verandert niets.
 Daarna een `config/anonymize.php` maken (zie hieronder). `anonymize/check` zegt
