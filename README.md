@@ -266,7 +266,7 @@ voor mist.
 | Preset | Wat het doet |
 |---|---|
 | `craft` | Staat altijd aan, zie "Wat altijd gebeurt". |
-| `formie` | **Inzendingen:** houden hun vorm met verzonnen inhoud (zie Handlers), en hun titel wordt `Inzending {id}`. **Verzonden notificaties:** verliezen hun mail. **Betalingen:** verliezen de antwoorden van de provider. **De oude tabellen van Formie 2** (`fmc_*`, `formie_nested`, `formie_tokens` en dergelijke): gaan leeg, en de rijen van hun groepen en herhalingen verliezen hun zoekwoorden. **Notificaties en integraties:** staan uit, zodat de kopie geen mail verstuurt en niets naar een CRM, nieuwsbrief of webhook stuurt. Wil je ze houden, zet dan `enabled` op `'keep'` in `tables.formie_notifications` of `tables.formie_integrations`. De integraties staan ook in project config: `project-config/apply` zet een integratie weer aan als haar config verandert, en met `--force` allemaal. De formulieren blijven. |
+| `formie` | Voor Formie 3 en 4. **Inzendingen:** houden hun vorm met verzonnen inhoud (zie Handlers), en hun titel wordt `Inzending {id}`. Wat er vooraf was ingevuld (`snapshot`), het request en de bevestigingstekst (`metadata`) gaan weg. **Verzonden notificaties:** verliezen hun mail. **Betalingen:** verliezen de antwoorden van de provider. **Wat Formie 4 bijhoudt terwijl het een inzending afhandelt** (halve inzendingen, uploads, leveringen aan integraties, ontvangen webhooks, exports en tokens): gaat leeg. **De oude tabellen van Formie 2** (`fmc_*`, `formie_nested`, `formie_tokens` en dergelijke): gaan leeg, en de rijen van hun groepen en herhalingen verliezen hun zoekwoorden. **Notificaties, geplande rapporten en integraties:** staan uit, zodat de kopie geen mail verstuurt en niets naar een CRM, nieuwsbrief of webhook stuurt. Wil je ze houden, zet dan `enabled` op `'keep'` in `tables.formie_notifications`, `tables.formie_scheduled_reports` of `tables.formie_integrations`. De integraties staan ook in project config: `project-config/apply` zet een integratie weer aan als haar config verandert, en met `--force` allemaal. De formulieren blijven. |
 | `retour` | De 404-statistiek verliest IP-adres, referrer en user agent. |
 | `knock-knock` | De inlogpogingen gaan leeg: daar staan IP-adressen en ingetypte wachtwoorden in. |
 | `webhooks` | De verstuurde requests gaan leeg, en de headers van een webhook (tokens) ook. |
@@ -290,7 +290,7 @@ de presets, en wat het script zelf doet met bijvoorbeeld `users`, `assets` en
 de rij weglaten, maar de anonimisering niet uitzetten. Meerdere handlers op één tabel
 draaien in de volgorde van `handlers`.
 
-`FormieSubmissions` (preset `formie`) is het voorbeeld. Formie 3 slaat een inzending op
+`FormieSubmissions` (preset `formie`) is het voorbeeld. Formie 3 en 4 slaan een inzending op
 als JSON op uid van elk veld, en genest voor groepen, herhalingen en de delen van een
 naam, adres of datum:
 
