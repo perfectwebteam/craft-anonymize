@@ -335,6 +335,7 @@ De preset `craft` (zie `presets/craft.php`) doet dit:
 - **Adressen** worden verzonnen, behalve die van bewaarde gebruikers en elementen.
 - **Sessies, tokens, de wachtrij, deprecation-logs en de asset-index** worden leeggemaakt.
 - **GraphQL-tokens** worden vervangen, behalve het publieke.
+- **OAuth** (Craft 5.12 en later): access tokens, auth codes en refresh tokens worden leeggemaakt. De clients blijven, zonder hun secret.
 - **Notities bij concepten en revisies** worden leeggemaakt.
 - **Tabellen die van Craft 4 zijn blijven staan** (`content`, `matrixcontent_*`, `matrixblocks`, `fieldgroups`, `fieldlayouttabs` en dergelijke, en `supertableblocks` en `stc_*` van Super Table) worden leeggemaakt. Craft 5 leest ze niet, maar er staan oude veldwaarden in.
 
