@@ -72,6 +72,12 @@ return [
         'craftidtokens' => ['keepRows' => ['userId' => 'keptUsers'], 'dropRows' => true],
         // GraphQL-tokens van productie werken niet op de kopie.
         'gqltokens' => ['keepRows' => ['accessToken' => ['__PUBLIC__']], 'columns' => ['accessToken' => 'token']],
+        // OAuth (Craft 5.12): ook geen token of code van productie. Een client is een
+        // registratie, geen persoon: die blijft, zonder secret.
+        'oauth_access_tokens' => 'empty',
+        'oauth_auth_codes' => 'empty',
+        'oauth_refresh_tokens' => 'empty',
+        'oauth_clients' => ['columns' => ['secret' => 'null']],
 
         // Notities bij concepten en revisies zijn vrije tekst.
         'drafts' => ['columns' => ['notes' => 'null', 'name' => ['value' => 'Concept']]],
